@@ -65,10 +65,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                // et.setText(""); //remove text
 
                 //enter back to suggetion array
-                et.setTextColor(Color.BLACK);
-                et.setEnabled(true);
-                suggetionArray.set(mPressedIndex, et).setTextColor(Color.BLACK);
-                suggetionArray.set(mPressedIndex, et).setEnabled(true);
+                int index = -1;
+                for (int i = 0 ; i < suggetionArray.size(); i++)
+                    if (suggetionArray.get(i).getText().toString().equals(text))
+                    {
+                        index = i;
+                        break;
+                    }
+
+                suggetionArray.set(index, et).setTextColor(Color.BLACK);
+                suggetionArray.set(index, et).setEnabled(true);
 
 
                 //remove from answer\
@@ -82,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else{
             mPressedIndex = suggetionArray.indexOf(et);
             //remove from possible solution
+
             suggetionArray.set(mPressedIndex, et).setTextColor(Color.GRAY);
             suggetionArray.set(mPressedIndex, et).setEnabled(false);
          //   et.setEnabled(false);
