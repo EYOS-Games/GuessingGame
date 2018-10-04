@@ -23,32 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/topLayout">
 
-
-        <EditText
-            android:id="@+id/editText12"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned" />
-
-        <EditText
-            android:id="@+id/editText11"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned" />
-
-        <EditText
-            android:id="@+id/editText10"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned" />
 
     </LinearLayout>
     <LinearLayout
@@ -65,10 +42,11 @@
             android:layout_weight="1"
             android:clickable="true"
             android:ems="10"
+            android:enabled="true"
+            android:focusable="false"
             android:inputType="numberSigned"
             android:onClick="onClick"
-            android:text="1"
-            android:focusable="false"/>
+            android:text="1" />
 
         <EditText
             android:id="@+id/editText16"
