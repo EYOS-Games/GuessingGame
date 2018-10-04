@@ -128,21 +128,11 @@ public class Utilities {
             else
                 i--;
         }
-       // Collections.shuffle(answerArray);
+
 
 
 
     }
 
-//    private static   EditText addAnswerCharsToArray(String answer,  EditText editText ){
-//        char[] answerArr =  answer.toCharArray();
-//        int num = random.nextInt(answer.length());
-//        for (int i = 0; i <answer.length() ; i++) {
-//            editText.setText(answerArr[num]);
-//        }
-//
-//        return  editText;
-//
-//
-//    }
+
 }
