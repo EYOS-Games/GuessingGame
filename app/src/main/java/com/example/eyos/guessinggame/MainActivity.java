@@ -8,25 +8,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText mOne, mThree, mSix, mSeven, mZero;
 
-    private EditText mAnswerOne, mAnswerTwo, mAnswerThree;
 
     private ArrayList<EditText> answerArray = new ArrayList<>();
     private ArrayList<EditText> suggetionArray = new ArrayList<>();
 
-    private String answer = "761";
+    private String answer = "zft";
     private String enteredAnswer  = "";
     
     private String TAG = "0";
 
     private LinearLayout mAnswerLayout;
+    private TableLayout mSuggetionLayout;
+
+    private TableRow bottomFirst, bottmSecond;
 
 
 
@@ -35,21 +38,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mOne = findViewById(R.id.editText17);
-        mThree = findViewById(R.id.editText16);
-        mSix = findViewById(R.id.editText15);
-        mSeven = findViewById(R.id.editText14);
-        mZero = findViewById(R.id.editText13);
+
 
         mAnswerLayout = findViewById(R.id.topLayout);
+        mSuggetionLayout  = findViewById(R.id.bottomLayout);
+
+      //  bottomFirst = findViewById(R.id.bottomRow1);
+     //   bottmSecond = findViewById(R.id.bottomRow2);
 
         Utilities.createAnswerArray(answer, answerArray, mAnswerLayout, this);
-//        mAnswerOne = findViewById(R.id.editText12);
-//        mAnswerTwo = findViewById(R.id.editText11);
-//        mAnswerThree = findViewById(R.id.editText10);
+        Utilities.createSuggetionArray(answer, suggetionArray, mSuggetionLayout, this);
 
-//        answerArray.add(mAnswerOne); answerArray.add(mAnswerTwo); answerArray.add(mAnswerThree);
-        suggetionArray.add(mOne);  suggetionArray.add(mThree);  suggetionArray.add(mSix);  suggetionArray.add(mSeven);  suggetionArray.add(mZero);
+
+
+
+
+
     }
 
     @Override
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String text = et.getText().toString();
         EditText selectedSuggestion, selectedAnswer;
         int fetchIndex, insertIndex;
-        //if top layout
+        //if answer array
         if(tag != null) {
             // if answer is in place
             if (!TextUtils.isEmpty(text)) {
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }
+        //if suggetion array
         else{
 
             //insert to solution
