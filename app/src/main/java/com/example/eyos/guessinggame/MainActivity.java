@@ -1,12 +1,18 @@
 package com.example.eyos.guessinggame;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -14,6 +20,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private int answerindex = 0;
     private ArrayList<EditText> answerArray = new ArrayList<>();
     private ArrayList<EditText> suggetionArray = new ArrayList<>();
 
@@ -24,8 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LinearLayout mAnswerLayout;
     private TableLayout mSuggetionLayout;
+    private ImageView mImageView;
 
     private String[] wordsArray;
+
+    private GestureDetector detector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +43,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         wordsArray = Utilities.readFileWords("words.txt",this);
-        answer = wordsArray[0].toLowerCase().trim(); //should be according to picture number or something
+        answer = wordsArray[answerindex].toLowerCase().trim(); //should be according to picture number or something
 
         mAnswerLayout = findViewById(R.id.topLayout);
         mSuggetionLayout = findViewById(R.id.bottomLayout);
+        mImageView = findViewById(R.id.imageView);
 
         Utilities.createAnswerArray(answer, answerArray, mAnswerLayout, this);
         Utilities.createSuggetionArray(answer, suggetionArray, mSuggetionLayout, this);
+        mImageView.setImageDrawable(Utilities.getImage(this,answer));
     }
 
     @Override
@@ -84,7 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "enteredAnswer: " + enteredAnswer);
 
                 if (enteredAnswer.equals(answer))
+                {
                     Toast.makeText(this, "good", Toast.LENGTH_LONG).show();
+                }
                 else {
                     Toast.makeText(this, "not good", Toast.LENGTH_LONG).show();
                     enteredAnswer = "";
