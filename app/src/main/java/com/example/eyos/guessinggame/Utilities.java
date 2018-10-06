@@ -1,5 +1,7 @@
 package com.example.eyos.guessinggame;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -156,6 +158,10 @@ public class Utilities {
         }
     }
 
+    public static Drawable getImage(Context context, String name) {
+        return context.getResources().getDrawable(context.getResources().getIdentifier(name, "drawable", context.getPackageName()));
+    }
+
 
     //region Helpers functions
 
@@ -165,7 +171,7 @@ public class Utilities {
             String line = "";
             while(c >= 0) {
                 c = reader.read();
-                if((char) c == '\r')
+                if((char) c == '\r' || (char) c == '\t' || (char) c == ' ')
                     continue;
                 else if((char) c == '\n')
                     return line;
