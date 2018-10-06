@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,10 +28,10 @@ public class Utilities {
 
     static Random random = new Random();
 
-    public static int getEditTextIndex(ArrayList<EditText> arrayList, String text) {
+    public static int getEditTextIndex(ArrayList<EditText> arrayList , String text, boolean getEnabled) {
         int index = -1;
         for (int i = 0; i < arrayList.size(); i++)
-            if (arrayList.get(i).getText().toString().equals(text)) {
+            if (arrayList.get(i).getText().toString().equals(text) && ( getEnabled == arrayList.get(i).isEnabled() ) ) {
                 index = i;
                 break;
             }
@@ -56,6 +57,7 @@ public class Utilities {
             int pixels = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DISPLAY_PXL, context.getResources().getDisplayMetrics()));
             editText.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.WRAP_CONTENT));
             editText.setTag(i);
+            editText.setGravity(Gravity.CENTER);
             editText.setFocusable(false);
             editText.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,26 +131,16 @@ public class Utilities {
         }
     }
 
-    public static String[] readFileWords(String path, final MainActivity context) {
-        int ctr = 0;
+    public static ArrayList<String> readFileWords(String path, final MainActivity context) {
+        String  line = null;
         try {
-            String words[];
+            ArrayList<String> words = new ArrayList<>();
             BufferedReader bufferedReader = readInputStreamFile(path,context);
-
-            String line = bufferedReader.readLine();
-            while(line != null && line.trim().length() > 0) {
-                ctr = ctr +1; //count words
-                line = bufferedReader.readLine();
+            while((line = bufferedReader.readLine()) != null) {
+                line = line.toLowerCase().trim();
+                words.add(line);
             }
 
-            words = new String[ctr]; //get number of words in the txt file
-
-            //read file again
-            bufferedReader = readInputStreamFile(path,context);
-
-            for (int i = 0; i < ctr ; i++) {
-                words[i] = readLineIgnoreCR(bufferedReader); //insert word by word to words array
-            }
 
             return words;
             //return word;
@@ -163,32 +155,35 @@ public class Utilities {
     }
 
 
+
     //region Helpers functions
 
-    private static String readLineIgnoreCR(BufferedReader reader) {
-        try {
-            int c = 0;
-            String line = "";
-            while(c >= 0) {
-                c = reader.read();
-                if((char) c == '\r' || (char) c == '\t' || (char) c == ' ')
-                    continue;
-                else if((char) c == '\n')
-                    return line;
-                line += (char) c;
-            }
-            return line;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    private static String readLineIgnoreCR(BufferedReader reader) {
+//        try {
+//            int c = 0;
+//            String line = "";
+//            while(c >= 0) {
+//                c = reader.read();
+//                if((char) c == '\r' || (char) c == '\t' || (char) c == ' ')
+//                    continue;
+//                else if((char) c == '\n')
+//                    return line;
+//                line += (char) c;
+//            }
+//            return line;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     private static BufferedReader readInputStreamFile(String path, MainActivity context){
         try{
+
             InputStream inputStream = context.getAssets().open(path);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-16");
             BufferedReader buffer = new BufferedReader(inputStreamReader);
+
             return buffer;
         }catch(IOException e){
             e.printStackTrace();
